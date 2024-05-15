@@ -1115,6 +1115,15 @@ PODS:
     - React-perflogger (= 0.73.7)
   - RNBootSplash (5.5.3):
     - React-Core
+  - RNGestureHandler (2.16.2):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+  - RNReanimated (3.11.0):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
   - RNScreens (3.29.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1201,6 +1210,8 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -1321,6 +1332,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNBootSplash:
     :path: "../node_modules/react-native-bootsplash"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
@@ -1390,6 +1405,8 @@ SPEC CHECKSUMS:
   React-utils: d07d009101c7dabff68b710da5c4a47b7a850d98
   ReactCommon: 8cae78d3c3eceff20ee4bbca8bb73b675a45fd5d
   RNBootSplash: e025d4ee98d942ee6c8b495a6fe66339a6b5f6dd
+  RNGestureHandler: 96439cf6543defdde87459e48cd1a3f0e45a008e
+  RNReanimated: 6cfa556540186ce7ae7a0b048f369236b1d86ebb
   RNScreens: 17e2f657f1b09a71ec3c821368a04acbb7ebcb46
   RNVectorIcons: 96e8c5c45609932bb2f8347e1c709bcca0e95654
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17

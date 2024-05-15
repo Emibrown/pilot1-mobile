@@ -19,7 +19,6 @@ const slide2 = require('../assets/slide2.png');
 const slide3 = require('../assets/slide3.png');
 
 const windowDimensions = Dimensions.get('window');
-const per_height = (value: number) => (value * windowDimensions.height) / 100;
 
 const slide = [
   {
@@ -39,7 +38,7 @@ const slide = [
   },
 ];
 
-const Onboarding = ({}: {}) => {
+const Onboarding = ({navigation}: {navigation: any}) => {
   const {top, bottom} = useSafeAreaInsets();
   const scrollEl = useRef<ScrollView>(null);
 
@@ -70,7 +69,7 @@ const Onboarding = ({}: {}) => {
       />
       <View style={styles.slideContainer}>
         <View style={styles.header}>
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate('Sample')}>
             <Text style={styles.skipText}>Skip</Text>
           </Pressable>
         </View>
@@ -85,7 +84,7 @@ const Onboarding = ({}: {}) => {
             setSliderPage(event);
           }}>
           {slide.map((item, i) => (
-            <View style={styles.des}>
+            <View style={styles.des} key={i}>
               <View style={styles.imageContainer}>
                 <Image style={styles.image} source={item.image} />
               </View>
@@ -114,7 +113,15 @@ const Onboarding = ({}: {}) => {
 
           <View>
             {pageIndex !== 2 ? (
-              <Pressable style={styles.nextButton}>
+              <Pressable
+                style={styles.nextButton}
+                onPress={() => {
+                  scrollEl.current?.scrollTo({
+                    x: windowDimensions.width * (pageIndex + 1),
+                    y: 0,
+                    animated: true,
+                  });
+                }}>
                 <CustomIcon
                   name="arrow-right-02-round"
                   size={30}
@@ -122,7 +129,9 @@ const Onboarding = ({}: {}) => {
                 />
               </Pressable>
             ) : (
-              <Pressable style={styles.getStartedButton}>
+              <Pressable
+                style={styles.getStartedButton}
+                onPress={() => navigation.navigate('SignUp')}>
                 <Text style={styles.getStartedText}>Get started</Text>
                 <CustomIcon
                   name="arrow-right-02-round"
