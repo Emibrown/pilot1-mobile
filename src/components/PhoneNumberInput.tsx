@@ -1,9 +1,9 @@
 // import {useIsFocused} from '@react-navigation/native';
 import React, {useCallback, useRef, useState} from 'react';
 import {StyleSheet, Pressable, View, TextInput, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import {fonts} from '../res/fonts';
 import {colors} from '../res/colors';
+import CustomIcon from './CustomIcon';
 
 export interface IPhoneNumberInput {
   callCode?: {
@@ -78,7 +78,7 @@ export default function PhoneNumberInput({
         />
         {searchValue && (
           <Pressable onPress={() => handleChange('')} style={{padding: 8}}>
-            <Icon name="x-circle" size={20} color={colors.textDarkAsh} />
+            <CustomIcon name="cancel-01" size={20} color={colors.textDarkAsh} />
           </Pressable>
         )}
       </View>
