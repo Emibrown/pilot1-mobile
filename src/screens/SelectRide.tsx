@@ -6,9 +6,13 @@ import SelectRideBottomSheet, {
   ISelectRideBottomSheet,
 } from '../components/SelectRideBottomSheet';
 import TopBar from '../components/TopBar';
+import RouteBottomSheet, {
+  IRouteBottomSheet,
+} from '../components/RouteBottomSheet';
 
-const SelectRide = ({navigation}: {navigation: any}) => {
+const SelectRide = ({}, {}) => {
   const selectRideBottomSheetRef = useRef<ISelectRideBottomSheet>(null);
+  const RouteSheetRef = useRef<IRouteBottomSheet>(null);
   const mapView = useRef<MapView>(null);
 
   useEffect(() => {
@@ -34,11 +38,12 @@ const SelectRide = ({navigation}: {navigation: any}) => {
           longitudeDelta: 0.0421,
         }}
       />
-      <TopBar />
+      <TopBar onEdit={() => RouteSheetRef.current?.present()} />
       <SelectRideBottomSheet
         ref={selectRideBottomSheetRef}
         onSubmit={() => {}}
       />
+      <RouteBottomSheet ref={RouteSheetRef} onCollapse={() => {}} />
     </View>
   );
 };

@@ -38,7 +38,7 @@ const Otp = ({navigation}: {navigation: any}) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
       enabled={Platform.OS === 'ios'}
       style={[styles.container, {paddingBottom: bottom}]}>
-      <Header />
+      <Header onClick={() => navigation.goBack()} />
       <View style={styles.content}>
         <Text style={styles.title}>Verify phone number</Text>
         <Text style={styles.info}>

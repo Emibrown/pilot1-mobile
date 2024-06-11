@@ -2,7 +2,6 @@ import React, {forwardRef, useImperativeHandle, useRef} from 'react';
 import {Keyboard, StyleSheet, View} from 'react-native';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import {colors} from '../res/colors';
-import {useNavigation} from '@react-navigation/native';
 import SearchPlaces from './SearchPlaces';
 import SearchInput, {ISearchInput} from './SearchInput';
 
@@ -12,15 +11,13 @@ export type ILocationBottomSheet = {
 };
 
 type Props = {
-  onSelect: () => void;
   onCollapse: () => void;
 };
 
 const LocationBottomSheet = forwardRef<ILocationBottomSheet, Props>(
-  ({onSelect, onCollapse}, ref) => {
+  ({onCollapse}, ref) => {
     const BottomSheetRef = useRef<BottomSheet>(null);
     const SearchInputRef = useRef<ISearchInput>(null);
-    const navigation = useNavigation();
 
     useImperativeHandle(ref, () => ({
       close() {
@@ -57,10 +54,13 @@ const LocationBottomSheet = forwardRef<ILocationBottomSheet, Props>(
         ref={BottomSheetRef}
         handleIndicatorStyle={styles.handleIndicatorStyle}
         index={-1}
+        // keyboardBehavior="interactive"
+        // android_keyboardInputMode="adjustResize"
+        // keyboardBlurBehavior="restore"
         // enableHandlePanningGesture={false}
         // enableContentPanningGesture={false}
         onChange={onChange}
-        snapPoints={[1, '90%']}>
+        snapPoints={[1, '95%']}>
         <BottomSheetView style={styles.contentContainer}>
           <View style={styles.input}>
             <SearchInput

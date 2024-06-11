@@ -7,7 +7,6 @@ import {
   Text,
   Keyboard,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors} from '../res/colors';
 import {fonts} from '../res/fonts';
@@ -16,23 +15,22 @@ import CustomIcon from './CustomIcon';
 export default function Header({
   title,
   icon = 'arrow-left-02-round',
+  onClick,
 }: {
   title?: string;
   icon?: string;
+  onClick: () => void;
 }) {
-  const navigation = useNavigation();
   const {top} = useSafeAreaInsets();
 
   const handleBackPress = useCallback(() => {
     if (Keyboard.isVisible()) {
       Keyboard.dismiss();
-      setTimeout(() => {
-        navigation.goBack();
-      }, 100);
+      onClick();
     } else {
-      navigation.goBack();
+      onClick();
     }
-  }, [navigation]);
+  }, [onClick]);
 
   return (
     <View style={[styles.container, {paddingTop: top}]}>

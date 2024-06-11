@@ -6,7 +6,6 @@ import Sample from '../screens/Sample';
 import SignUp from '../screens/SignUp';
 import Otp from '../screens/Otp';
 import SetupProfile from '../screens/SetupProfile';
-import Route from '../screens/Route';
 import DrawerNav from './DrawerNav';
 import SelectRide from '../screens/SelectRide';
 import ConfirmOrder from '../screens/ConfirmOrder';
@@ -20,7 +19,7 @@ const AppNav = ({}: {}) => {
         screenOptions={{
           animation: 'slide_from_right',
         }}
-        initialRouteName="Dashboard">
+        initialRouteName="Onboarding">
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}
@@ -54,15 +53,6 @@ const AppNav = ({}: {}) => {
           component={DrawerNav}
           options={{
             headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Route"
-          component={Route}
-          options={{
-            headerShown: false,
-            // presentation: 'modal',
-            animation: 'slide_from_bottom',
           }}
         />
         <Stack.Screen

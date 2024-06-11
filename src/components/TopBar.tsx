@@ -7,7 +7,7 @@ import CustomIcon from './CustomIcon';
 import {colors} from '../res/colors';
 import {fonts} from '../res/fonts';
 
-export default function TopBar({}: {}) {
+export default function TopBar({onEdit}: {onEdit: () => void}) {
   const navigation = useNavigation();
   const {top} = useSafeAreaInsets();
   return (
@@ -25,9 +25,7 @@ export default function TopBar({}: {}) {
               ? {backgroundColor: colors.neutralN100}
               : {},
           ]}
-          onPress={() => {
-            navigation.navigate('Route');
-          }}>
+          onPress={onEdit}>
           <CustomIcon name="search" size={18} color={colors.neutralN300} />
           <Text style={styles.searchText}>Wingside, 24 Perekule street.</Text>
         </Pressable>
@@ -55,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
-    paddingVertical: 7,
+    paddingVertical: 12,
     paddingHorizontal: 10,
     borderRadius: 16,
   },

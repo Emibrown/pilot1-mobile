@@ -5,7 +5,7 @@ import CustomIcon from './CustomIcon';
 import {fonts} from '../res/fonts';
 import {colors} from '../res/colors';
 import RecentPlaces from './RecentPlaces';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 
 export type IWhereBottomSheet = {
   close: () => void;
@@ -14,12 +14,13 @@ export type IWhereBottomSheet = {
 
 type Props = {
   onSubmit: () => void;
+  setRoute: () => void;
 };
 
 const WhereBottomSheet = forwardRef<IWhereBottomSheet, Props>(
-  ({onSubmit}, ref) => {
+  ({setRoute}, ref) => {
     const BottomSheetRef = useRef<BottomSheet>(null);
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
 
     useImperativeHandle(ref, () => ({
       close() {
@@ -59,7 +60,7 @@ const WhereBottomSheet = forwardRef<IWhereBottomSheet, Props>(
                   styles.whereTo,
                   pressed && Platform.OS === 'ios' ? {opacity: 0.7} : {},
                 ]}
-                onPress={() => navigation.navigate('Route')}>
+                onPress={() => setRoute()}>
                 <CustomIcon
                   name="search"
                   size={20}

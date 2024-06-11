@@ -24,7 +24,7 @@ const SearchInput = forwardRef<ISearchInput, ISearchInputProps>(
   ({placeholder, onChangeText}, ref) => {
     const [inputFocus, setFocus] = useState<boolean>(false);
     const [searchValue, setValue] = useState<string>();
-    const textInput = useRef<TextInput>(null);
+    const textInput = useRef<any>(null);
 
     useImperativeHandle(ref, () => ({
       focus() {

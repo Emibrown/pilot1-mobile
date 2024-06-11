@@ -81,6 +81,7 @@ export default function SearchPlaces({onSelect}: ISearchPlaces) {
         )}
         keyExtractor={(item, i) => i.toString()}
         showsHorizontalScrollIndicator={false}
+        bounces={false}
       />
     </View>
   );

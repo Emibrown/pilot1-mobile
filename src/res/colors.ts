@@ -5,6 +5,7 @@ export const colors = {
   brandPrimaryP800: '#7C4417',
   brandPrimaryP500: '#D99B19',
   brandSecondaryS200: '#F0EACB',
+  brandPrimaryP50: '#FCFAEA',
   neutralN100: '#D3DADD',
   neutralN600: '#565D60',
   neutralN900: '#0B1215',

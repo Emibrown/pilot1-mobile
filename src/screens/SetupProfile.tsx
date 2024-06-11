@@ -21,7 +21,7 @@ const SetupProfile = ({navigation}: {navigation: any}) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
       enabled={Platform.OS === 'ios'}
       style={[styles.container, {paddingBottom: bottom}]}>
-      <Header />
+      <Header onClick={() => navigation.goBack()} />
       <ScrollView style={styles.content}>
         <Text style={styles.title}>Setup your Profile</Text>
         <Text style={styles.info}>

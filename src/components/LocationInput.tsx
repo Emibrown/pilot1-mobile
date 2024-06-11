@@ -1,11 +1,21 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import {StyleSheet, View, TextInput, Animated} from 'react-native';
 import {fonts} from '../res/fonts';
 import {colors} from '../res/colors';
 import CustomIcon from './CustomIcon';
 import IconButton from './IconButton';
 
-export interface ILocationInput {
+export type ILocationInput = {
+  focus: () => void;
+};
+
+export interface props {
   placeholder: string;
   onChangeText: (v: string) => void;
   type?: 'From' | 'To';
@@ -15,7 +25,7 @@ export interface ILocationIcon {
   size: number;
 }
 
-export function LocationIcon({size}: ILocationIcon) {
+const LocationIcon = ({size}: ILocationIcon) => {
   return (
     <View
       style={[
@@ -24,83 +34,87 @@ export function LocationIcon({size}: ILocationIcon) {
       ]}
     />
   );
-}
+};
 
-export default function LocationInput({
-  placeholder,
-  onChangeText,
-  type,
-}: ILocationInput) {
-  const position = useRef(new Animated.Value(0)).current;
-  const [inputFocus, setFocus] = useState<boolean>(false);
-  const [searchValue, setValue] = useState<string>();
-  const textInput = useRef<TextInput>(null);
+const LocationInput = forwardRef<ILocationInput, props>(
+  ({placeholder, onChangeText, type}, ref) => {
+    const position = useRef(new Animated.Value(0)).current;
+    const [inputFocus, setFocus] = useState<boolean>(false);
+    const [searchValue, setValue] = useState<string>();
+    const textInput = useRef<TextInput>(null);
 
-  const handleFocus = useCallback(() => {
-    setFocus(true);
-    if (!inputFocus) {
-    }
-  }, [inputFocus]);
+    useImperativeHandle(ref, () => ({
+      focus() {
+        textInput.current?.focus();
+      },
+    }));
 
-  const handleBlur = useCallback(() => {
-    setFocus(false);
-    if (inputFocus && !searchValue) {
-      Animated.timing(position, {
-        toValue: 0,
-        duration: 150,
-        useNativeDriver: false,
-      }).start();
-    }
-  }, [inputFocus, position, searchValue]);
+    const handleFocus = useCallback(() => {
+      setFocus(true);
+      if (!inputFocus) {
+      }
+    }, [inputFocus]);
 
-  const handleChange = useCallback(
-    (value: string) => {
-      setValue(value);
-      onChangeText(value);
-    },
-    [onChangeText],
-  );
+    const handleBlur = useCallback(() => {
+      setFocus(false);
+      if (inputFocus && !searchValue) {
+        Animated.timing(position, {
+          toValue: 0,
+          duration: 150,
+          useNativeDriver: false,
+        }).start();
+      }
+    }, [inputFocus, position, searchValue]);
 
-  return (
-    <View style={[styles.search, inputFocus && styles.focusSearch]}>
-      <View style={styles.icon}>
-        {!inputFocus ? (
-          type === 'From' ? (
-            <LocationIcon size={14} />
+    const handleChange = useCallback(
+      (value: string) => {
+        setValue(value);
+        onChangeText(value);
+      },
+      [onChangeText],
+    );
+
+    return (
+      <View style={[styles.search, inputFocus && styles.focusSearch]}>
+        <View style={styles.icon}>
+          {!inputFocus ? (
+            type === 'From' ? (
+              <LocationIcon size={14} />
+            ) : (
+              <CustomIcon
+                name="location-06"
+                size={16}
+                color={colors.brandPrimaryBase}
+              />
+            )
           ) : (
-            <CustomIcon
-              name="location-06"
-              size={16}
-              color={colors.brandPrimaryBase}
-            />
-          )
-        ) : (
-          <CustomIcon name="search" size={16} color={colors.neutralN300} />
+            <CustomIcon name="search" size={16} color={colors.neutralN300} />
+          )}
+        </View>
+        <TextInput
+          ref={textInput}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          placeholder={placeholder}
+          value={searchValue}
+          keyboardType={'web-search'}
+          onChangeText={handleChange}
+          selectionColor={colors.brandPrimaryBase}
+          placeholderTextColor={colors.textAsh}
+          style={[styles.input, searchValue ? {paddingRight: 0} : {}]}
+        />
+        {inputFocus && (
+          <IconButton
+            size={20}
+            background={false}
+            icon="maps-location-02"
+            onPress={() => {}}
+          />
         )}
       </View>
-      <TextInput
-        ref={textInput}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        placeholder={placeholder}
-        value={searchValue}
-        keyboardType={'web-search'}
-        onChangeText={handleChange}
-        selectionColor={colors.brandPrimaryBase}
-        placeholderTextColor={colors.textAsh}
-        style={[styles.input, searchValue ? {paddingRight: 0} : {}]}
-      />
-      {inputFocus && (
-        <IconButton
-          size={20}
-          background={false}
-          icon="maps-location-02"
-          onPress={() => {}}
-        />
-      )}
-    </View>
-  );
-}
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   search: {
@@ -144,3 +158,5 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
+
+export default LocationInput;

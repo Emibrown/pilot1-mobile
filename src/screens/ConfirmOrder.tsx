@@ -39,12 +39,11 @@ const ConfirmOrder = ({navigation}: {navigation: any}) => {
       </View>
       <ConfirmOrderBottomSheet
         ref={confirmOrderRef}
-        onSubmit={() => {}}
+        onSubmit={() => navigation.navigate('ConnectDriver')}
         onCollapse={() => selectLocationRef.current?.present()}
       />
       <LocationBottomSheet
         ref={selectLocationRef}
-        onSelect={() => {}}
         onCollapse={() => confirmOrderRef.current?.present()}
       />
     </View>

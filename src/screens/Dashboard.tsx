@@ -7,10 +7,14 @@ import WhereBottomSheet, {
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import MapStyle from '../raw/mapStyle.json';
 import DrawerButton from '../components/DrawerButton';
+import RouteBottomSheet, {
+  IRouteBottomSheet,
+} from '../components/RouteBottomSheet';
 
 const Dashboard = ({navigation}: {navigation: any}) => {
   const setLocationRef = useRef<ISetLocation>(null);
   const whereBottomSheetRef = useRef<IWhereBottomSheet>(null);
+  const RouteSheetRef = useRef<IRouteBottomSheet>(null);
   const mapView = useRef<MapView>(null);
 
   useEffect(() => {
@@ -43,8 +47,13 @@ const Dashboard = ({navigation}: {navigation: any}) => {
         }}
       />
       <DrawerButton onPress={() => navigation.openDrawer()} />
-      <WhereBottomSheet ref={whereBottomSheetRef} onSubmit={() => {}} />
+      <WhereBottomSheet
+        ref={whereBottomSheetRef}
+        onSubmit={() => {}}
+        setRoute={() => RouteSheetRef.current?.present()}
+      />
       <SetLocation ref={setLocationRef} onSubmit={() => {}} />
+      <RouteBottomSheet ref={RouteSheetRef} onCollapse={() => {}} />
     </View>
   );
 };

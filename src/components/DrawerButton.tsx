@@ -21,7 +21,7 @@ export default function DrawerButton({onPress}: {onPress: () => void}) {
               : {},
           ]}
           onPress={onPress}>
-          <CustomIcon name="bars-3" size={18} color={colors.neutralN900} />
+          <CustomIcon name="bars-3" size={20} color={colors.neutralN900} />
         </Pressable>
       </View>
     </View>
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     left: 15,
-    height: 40,
-    width: 40,
+    height: 43,
+    width: 43,
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: {

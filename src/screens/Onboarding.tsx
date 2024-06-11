@@ -61,6 +61,7 @@ const Onboarding = ({navigation}: {navigation: any}) => {
   return (
     <ScrollView
       contentContainerStyle={styles.containerStyle}
+      bounces={false}
       style={[styles.container, {paddingTop: top, paddingBottom: bottom}]}>
       <StatusBar
         backgroundColor="transparent"
@@ -79,6 +80,7 @@ const Onboarding = ({navigation}: {navigation: any}) => {
           horizontal={true}
           scrollEventThrottle={16}
           pagingEnabled={true}
+          bounces={false}
           showsHorizontalScrollIndicator={false}
           onScroll={(event: any) => {
             setSliderPage(event);
