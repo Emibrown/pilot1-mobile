@@ -10,11 +10,13 @@ export default function LoaderBar({}: {}) {
   });
 
   useEffect(() => {
-    Animated.timing(barWidth, {
-      duration: 5000,
-      toValue: 100,
-      useNativeDriver: false,
-    }).start();
+    Animated.loop(
+      Animated.timing(barWidth, {
+        duration: 5000,
+        toValue: 100,
+        useNativeDriver: false,
+      }),
+    ).start();
   }, [barWidth]);
 
   return (

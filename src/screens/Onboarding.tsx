@@ -70,7 +70,7 @@ const Onboarding = ({navigation}: {navigation: any}) => {
       />
       <View style={styles.slideContainer}>
         <View style={styles.header}>
-          <Pressable onPress={() => navigation.navigate('Sample')}>
+          <Pressable onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.skipText}>Skip</Text>
           </Pressable>
         </View>

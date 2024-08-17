@@ -191,8 +191,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderRadius: 12,
     marginHorizontal: 10,
     marginBottom: 15,
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   },
   text: {
     padding: 0,
-    gap: 5,
+    // gap: 2,
   },
   street: {
     fontFamily: fonts.Regular,
@@ -233,13 +233,13 @@ const styles = StyleSheet.create({
     color: colors.textAsh,
   },
   image: {
-    width: 50,
+    width: 40,
     resizeMode: 'contain',
   },
   priceInfo: {
     flex: 1,
     alignItems: 'flex-end',
-    gap: 5,
+    // gap: 5,
   },
   timeInfo: {
     flexDirection: 'row',

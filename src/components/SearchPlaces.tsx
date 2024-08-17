@@ -10,43 +10,76 @@ import {
 import {colors} from '../res/colors';
 import {fonts} from '../res/fonts';
 import CustomIcon from './CustomIcon';
-
-let places = [
-  {
-    street: '58 Kan Saro-Wiwa Road',
-    city: 'Port Harcourt',
-    country: 'Nigeria',
-  },
-  {
-    street: 'River State University',
-    city: 'Port Harcourt',
-    country: 'Nigeria',
-  },
-  {
-    street: '23 Okokwu Street',
-    city: 'Port Harcourt',
-    country: 'Nigeria',
-  },
-  {
-    street: 'Waterlines Bus Stop',
-    city: 'Port Harcourt',
-    country: 'Nigeria',
-  },
-];
-
-type ItemProps = {
-  street: string;
-  city: string;
-  country: string;
-};
+import {FadeLoading} from 'react-native-fade-loading';
+import {ILocation} from '../states/interfaces';
 
 export interface ISearchPlaces {
-  onSelect: (v: ItemProps) => void;
+  onSelect: (v: ILocation) => void;
+  isLoading?: boolean;
+  placeData?: ILocation[];
 }
 
+const Loader = () => {
+  return (
+    <View style={styles.loaderContainer}>
+      <View
+        style={{
+          height: 20,
+          width: 20,
+        }}>
+        <FadeLoading
+          animated
+          children={<View style={{height: 10, width: 10}} />}
+          visible
+          style={{}}
+          primaryColor={colors.bkgLightAsh}
+          secondaryColor={colors.bkgAsh}
+          duration={3000}
+        />
+      </View>
+      <View style={{flex: 1, gap: 5}}>
+        <View
+          style={{
+            height: 15,
+            width: '100%',
+          }}
+          children={
+            <FadeLoading
+              animated
+              children={<View style={{height: 5}} />}
+              visible
+              style={{}}
+              primaryColor={colors.bkgLightAsh}
+              secondaryColor={colors.bkgAsh}
+              duration={3000}
+            />
+          }
+        />
+        <View
+          style={{
+            height: 10,
+            width: '60%',
+          }}
+          children={
+            <FadeLoading
+              animated
+              children={<View style={{flex: 1}} />}
+              visible
+              style={{}}
+              primaryColor={colors.bkgLightAsh}
+              secondaryColor={colors.bkgAsh}
+              duration={3000}
+            />
+          }
+        />
+      </View>
+    </View>
+  );
+};
+
 const MainItem = (props: {
-  place: ItemProps;
-  onSelect: (v: ItemProps) => void;
+  place: ILocation;
+  onSelect: (v: ILocation) => void;
 }) => {
   return (
     <Pressable
@@ -60,29 +93,40 @@ const MainItem = (props: {
           ? {backgroundColor: colors.neutralN100}
           : {},
       ]}>
-      <CustomIcon name="clock-01" color={colors.neutralN600} size={20} />
+      <CustomIcon name="location-06" color={colors.neutralN600} size={20} />
       <View style={styles.text}>
-        <Text style={styles.street}>{props.place.street}</Text>
-        <Text style={styles.info}>
-          {props.place.city}, {props.place.country}
+        <Text style={styles.street} numberOfLines={1}>
+          {props.place.street}
+        </Text>
+        <Text numberOfLines={1} style={styles.info}>
+          {props.place.city}
         </Text>
       </View>
     </Pressable>
   );
 };
 
-export default function SearchPlaces({onSelect}: ISearchPlaces) {
+export default function SearchPlaces({
+  onSelect,
+  isLoading = false,
+  placeData = [],
+}: ISearchPlaces) {
   return (
     <View style={{flex: 1}}>
-      <FlatList
-        data={places}
-        renderItem={({item}) => (
-          <MainItem place={item} onSelect={v => onSelect(v)} />
-        )}
-        keyExtractor={(item, i) => i.toString()}
-        showsHorizontalScrollIndicator={false}
-        bounces={false}
-      />
+      {isLoading ? (
+        Array.from(Array(5).keys()).map((key, index) => <Loader key={index} />)
+      ) : (
+        <FlatList
+          data={placeData}
+          renderItem={({item}) => (
+            <MainItem place={item} onSelect={v => onSelect(v)} />
+          )}
+          keyExtractor={(item, i) => i.toString()}
+          showsHorizontalScrollIndicator={false}
+          bounces={false}
+          keyboardShouldPersistTaps="handled"
+        />
+      )}
     </View>
   );
 }
@@ -110,6 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   text: {
+    flex: 1,
     padding: 0,
     gap: 5,
   },
@@ -122,5 +167,11 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Regular,
     fontSize: 12,
     color: colors.textAsh,
+  },
+  loaderContainer: {
+    flexDirection: 'row',
+    gap: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
   },
 });

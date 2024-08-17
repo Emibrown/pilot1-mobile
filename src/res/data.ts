@@ -1,0 +1,80 @@
+export const rides = [
+  {
+    pickupAddress: '123 Main St, New York, NY 10001',
+    destinationAddress: '456 Broadway, New York, NY 10013',
+    price: 25.99,
+    arriveTime: '2023-03-15T14:30:00',
+  },
+  {
+    pickupAddress: '789 5th Ave, New York, NY 10022',
+    destinationAddress: '321 Park Ave, New York, NY 10022',
+    price: 18.99,
+    arriveTime: '2023-03-15T15:45:00',
+  },
+  {
+    pickupAddress: '901 Lexington Ave, New York, NY 10021',
+    destinationAddress: '111 1st Ave, New York, NY 10003',
+    price: 12.99,
+    arriveTime: '2023-03-15T16:15:00',
+  },
+  {
+    pickupAddress: '345 6th Ave, New York, NY 10011',
+    destinationAddress: '678 3rd Ave, New York, NY 10017',
+    price: 20.99,
+    arriveTime: '2023-03-15T17:00:00',
+  },
+  {
+    pickupAddress: '567 7th Ave, New York, NY 10018',
+    destinationAddress: '234 8th Ave, New York, NY 10001',
+    price: 15.99,
+    arriveTime: '2023-03-15T17:30:00',
+  },
+  {
+    pickupAddress: '890 9th Ave, New York, NY 10019',
+    destinationAddress: '567 10th Ave, New York, NY 10011',
+    price: 22.99,
+    arriveTime: '2023-03-15T18:00:00',
+  },
+  {
+    pickupAddress: '345 11th Ave, New York, NY 10011',
+    destinationAddress: '123 12th Ave, New York, NY 10013',
+    price: 19.99,
+    arriveTime: '2023-03-15T18:30:00',
+  },
+  {
+    pickupAddress: '678 13th Ave, New York, NY 10014',
+    destinationAddress: '456 14th Ave, New York, NY 10015',
+    price: 24.99,
+    arriveTime: '2023-03-15T19:00:00',
+  },
+  {
+    pickupAddress: '901 15th Ave, New York, NY 10016',
+    destinationAddress: '789 16th Ave, New York, NY 10017',
+    price: 16.99,
+    arriveTime: '2023-03-15T19:30:00',
+  },
+  {
+    pickupAddress: '234 17th Ave, New York, NY 10018',
+    destinationAddress: '567 18th Ave, New York, NY 10019',
+    price: 21.99,
+    arriveTime: '2023-03-15T20:00:00',
+  },
+  {
+    pickupAddress: '123 19th Ave, New York, NY 10020',
+    destinationAddress: '345 20th Ave, New York, NY 10021',
+    price: 17.99,
+    arriveTime: '2023-03-15T20:30:00',
+  },
+  {
+    pickupAddress: '456 21st Ave, New York, NY 10022',
+    destinationAddress: '678 22nd Ave, New York, NY 10023',
+    price: 23.99,
+    arriveTime: '2023-03-15T21:00:00',
+  },
+  {
+    pickupAddress: '789 23rd Ave, New York, NY 10024',
+    destinationAddress: '901 24th Ave, New York, NY 10025',
+    price: 19.99,
+    arriveTime: '2024-03-15T21:30:00',
+  },
+];

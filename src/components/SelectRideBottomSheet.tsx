@@ -6,8 +6,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {StyleSheet, View} from 'react-native';
-import BottomSheet, {BottomSheetFooter} from '@gorhom/bottom-sheet';
+import {StyleSheet, Text, View} from 'react-native';
+import BottomSheet, {
+  BottomSheetFooter,
+  BottomSheetScrollView,
+} from '@gorhom/bottom-sheet';
 import {colors} from '../res/colors';
 import Button from './Button';
 import RidePicker from './RidePicker';
@@ -18,6 +21,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {useNavigation} from '@react-navigation/native';
+import CustomIcon from './CustomIcon';
+import {fonts} from '../res/fonts';
 
 export type ISelectRideBottomSheet = {
   close: () => void;
@@ -36,7 +41,7 @@ const SelectRideBottomSheet = forwardRef<ISelectRideBottomSheet, Props>(
     const navigation = useNavigation();
     const [selectedRide, setSelectedRide] = useState<rideProps | null>(null);
     const dragY = useSharedValue(CONTENT_HEIGHT);
-    const snapPoints = useMemo(() => [300, '95%'], []);
+    const snapPoints = useMemo(() => [350, '95%'], []);
     const [sheetIndex, setSheetIndex] = useState<number>(0);
 
     useImperativeHandle(ref, () => ({
@@ -53,6 +58,19 @@ const SelectRideBottomSheet = forwardRef<ISelectRideBottomSheet, Props>(
       (props: any) => (
         <BottomSheetFooter {...props} bottomInset={0}>
           <View style={styles.footerContainer}>
+            <View style={styles.payment}>
+              <CustomIcon
+                name="cash-02"
+                size={24}
+                color={colors.brandPrimaryP950}
+              />
+              <Text style={styles.paymentText}>Cash</Text>
+              <CustomIcon
+                name="arrow-right-01-round-1"
+                size={24}
+                color={colors.brandPrimaryP950}
+              />
+            </View>
             <Button
               text={`Select ${selectedRide ? selectedRide.title : 'Economy'}`}
               onPress={() => navigation.navigate('ConfirmOrder')}
@@ -60,7 +78,7 @@ const SelectRideBottomSheet = forwardRef<ISelectRideBottomSheet, Props>(
           </View>
         </BottomSheetFooter>
       ),
-      [selectedRide],
+      [selectedRide, navigation],
     );
 
     // callbacks
@@ -101,13 +119,15 @@ const SelectRideBottomSheet = forwardRef<ISelectRideBottomSheet, Props>(
         enableOverDrag={false}
         snapPoints={snapPoints}
         footerComponent={renderFooter}>
-        <Animated.View style={[sheetContainer, {overflow: 'scroll'}]}>
-          <RidePicker
-            selectedIndex="1"
-            sheetIndex={sheetIndex}
-            onSelect={onSelect}
-          />
-        </Animated.View>
+        <BottomSheetScrollView style={styles.contentContainer}>
+          <Animated.View style={[sheetContainer, {overflow: 'scroll'}]}>
+            <RidePicker
+              selectedIndex="1"
+              sheetIndex={sheetIndex}
+              onSelect={onSelect}
+            />
+          </Animated.View>
+        </BottomSheetScrollView>
       </BottomSheet>
     );
   },
@@ -132,12 +152,27 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    paddingTop: 10,
   },
   footerContainer: {
     backgroundColor: 'white',
     paddingHorizontal: 20,
     paddingVertical: 20,
+    gap: 10,
+  },
+  payment: {
+    flexDirection: 'row',
+    backgroundColor: colors.neutralN100,
+    alignItems: 'center',
+    gap: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  paymentText: {
+    flex: 1,
+    fontSize: 16,
+    color: colors.textDark,
+    fontFamily: fonts.Medium,
   },
 });
 

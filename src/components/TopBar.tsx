@@ -6,10 +6,14 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CustomIcon from './CustomIcon';
 import {colors} from '../res/colors';
 import {fonts} from '../res/fonts';
+import {IAppState} from '../states/interfaces';
+import {useSelector} from 'react-redux';
 
 export default function TopBar({onEdit}: {onEdit: () => void}) {
   const navigation = useNavigation();
   const {top} = useSafeAreaInsets();
+  const {destination} = useSelector((state: IAppState) => state.ride);
+
   return (
     <View style={[styles.container, {top: top + 10}]}>
       <FloatingButton onPress={() => navigation.goBack()} />
@@ -27,7 +31,10 @@ export default function TopBar({onEdit}: {onEdit: () => void}) {
           ]}
           onPress={onEdit}>
           <CustomIcon name="search" size={18} color={colors.neutralN300} />
-          <Text style={styles.searchText}>Wingside, 24 Perekule street.</Text>
+          <Text style={styles.searchText} numberOfLines={1}>
+            {destination?.street}
+          </Text>
+          <CustomIcon name="edit-02" size={18} color={colors.neutralN300} />
         </Pressable>
       </View>
     </View>
@@ -54,10 +61,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 5,
     paddingVertical: 12,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     borderRadius: 16,
   },
   searchText: {
+    flex: 1,
     fontSize: 14,
     color: colors.textDark,
     fontFamily: fonts.Regular,

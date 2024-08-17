@@ -15,10 +15,12 @@ import CustomIcon from './CustomIcon';
 export default function Header({
   title,
   icon = 'arrow-left-02-round',
+  bgk = 'white',
   onClick,
 }: {
   title?: string;
   icon?: string;
+  bgk?: string;
   onClick: () => void;
 }) {
   const {top} = useSafeAreaInsets();
@@ -33,7 +35,7 @@ export default function Header({
   }, [onClick]);
 
   return (
-    <View style={[styles.container, {paddingTop: top}]}>
+    <View style={[styles.container, {paddingTop: top, backgroundColor: bgk}]}>
       <View style={styles.backButton}>
         <Pressable
           android_ripple={{
@@ -61,7 +63,6 @@ export default function Header({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,

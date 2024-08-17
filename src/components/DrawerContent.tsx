@@ -11,9 +11,13 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors} from '../res/colors';
 import {fonts} from '../res/fonts';
 import CustomIcon from './CustomIcon';
+import Avatar from './Avatar';
+import {useSelector} from 'react-redux';
+import {IAppState} from '../states/interfaces';
 
 function DrawerContent(props: any): JSX.Element {
   const {top} = useSafeAreaInsets();
+  const {firstName, lastName} = useSelector((state: IAppState) => state.user);
 
   const handleNavigation = useCallback(
     (screen: string) => {
@@ -27,8 +31,10 @@ function DrawerContent(props: any): JSX.Element {
     <ScrollView style={styles.drawer}>
       <View style={styles.content}>
         <View style={[styles.profile, {marginTop: top}]}>
-          <View style={styles.image} />
-          <Text style={styles.name}>Emi Brown</Text>
+          <Avatar size={70} />
+          <Text style={styles.name}>
+            {firstName} {lastName}
+          </Text>
           <View style={styles.rating}>
             <CustomIcon
               name="star_fill"
@@ -54,7 +60,7 @@ function DrawerContent(props: any): JSX.Element {
                   ? {backgroundColor: colors.neutralN100}
                   : {},
               ]}
-              onPress={() => {}}>
+              onPress={() => handleNavigation('Account')}>
               <View style={styles.menuInfo}>
                 <CustomIcon name="user" size={20} color={colors.neutralN600} />
                 <Text style={styles.buttonText}>Account</Text>
@@ -101,7 +107,7 @@ function DrawerContent(props: any): JSX.Element {
                   ? {backgroundColor: colors.neutralN100}
                   : {},
               ]}
-              onPress={() => {}}>
+              onPress={() => handleNavigation('RideHistory')}>
               <View style={styles.menuInfo}>
                 <CustomIcon
                   name="car-02"

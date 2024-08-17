@@ -6,6 +6,7 @@ export const colors = {
   brandPrimaryP500: '#D99B19',
   brandSecondaryS200: '#F0EACB',
   brandPrimaryP50: '#FCFAEA',
+  brandPrimaryP900: '#6A3919',
   neutralN100: '#D3DADD',
   neutralN600: '#565D60',
   neutralN900: '#0B1215',
@@ -19,4 +20,7 @@ export const colors = {
   bkgAsh: '#EAEAEA',
   label: '#90FDAF',
   labelText: '#083916',
+  containerBg: 'white',
+  rideIcon: '#AF884D',
+  rideIconBkg: '#FFEBCE',
 };

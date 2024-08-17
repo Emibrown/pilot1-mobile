@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -10,22 +11,27 @@ import {fonts} from '../res/fonts';
 import {colors} from '../res/colors';
 import CustomIcon from './CustomIcon';
 import IconButton from './IconButton';
+import {useNavigation} from '@react-navigation/native';
 
 export type ILocationInput = {
   focus: () => void;
+  isFocused: () => boolean | undefined;
 };
 
 export interface props {
   placeholder: string;
   onChangeText: (v: string) => void;
-  type?: 'From' | 'To';
+  onFocus?: () => void;
+  onClear?: () => void;
+  type: 'From' | 'To';
+  value?: string;
 }
 
 export interface ILocationIcon {
   size: number;
 }
 
-const LocationIcon = ({size}: ILocationIcon) => {
+export const LocationIcon = ({size}: ILocationIcon) => {
   return (
     <View
       style={[
@@ -37,23 +43,28 @@ const LocationIcon = ({size}: ILocationIcon) => {
 };
 
 const LocationInput = forwardRef<ILocationInput, props>(
-  ({placeholder, onChangeText, type}, ref) => {
+  ({placeholder, onChangeText, onFocus, onClear, type, value}, ref) => {
     const position = useRef(new Animated.Value(0)).current;
     const [inputFocus, setFocus] = useState<boolean>(false);
-    const [searchValue, setValue] = useState<string>();
+    const [searchValue, setValue] = useState<string>(value || '');
     const textInput = useRef<TextInput>(null);
+    const navigation = useNavigation();
 
     useImperativeHandle(ref, () => ({
       focus() {
         textInput.current?.focus();
       },
+      isFocused() {
+        return textInput.current?.isFocused();
+      },
     }));
 
     const handleFocus = useCallback(() => {
       setFocus(true);
-      if (!inputFocus) {
+      if (onFocus) {
+        onFocus();
       }
-    }, [inputFocus]);
+    }, [onFocus]);
 
     const handleBlur = useCallback(() => {
       setFocus(false);
@@ -73,6 +84,25 @@ const LocationInput = forwardRef<ILocationInput, props>(
       },
       [onChangeText],
     );
+
+    useEffect(() => {
+      if (value) {
+        setValue(value);
+      }
+    }, [value]);
+
+    const goToMap = useCallback(() => {
+      navigation.navigate('ChooseLocationMap', {
+        type: type,
+      });
+    }, [type, navigation]);
+
+    const clearText = useCallback(() => {
+      if (onClear) {
+        setValue('');
+        onClear();
+      }
+    }, [onClear]);
 
     return (
       <View style={[styles.search, inputFocus && styles.focusSearch]}>
@@ -101,15 +131,23 @@ const LocationInput = forwardRef<ILocationInput, props>(
           onChangeText={handleChange}
           selectionColor={colors.brandPrimaryBase}
           placeholderTextColor={colors.textAsh}
-          style={[styles.input, searchValue ? {paddingRight: 0} : {}]}
+          style={[styles.input, searchValue ? {paddingRight: 10} : {}]}
         />
         {inputFocus && (
-          <IconButton
-            size={20}
-            background={false}
-            icon="maps-location-02"
-            onPress={() => {}}
-          />
+          <>
+            <IconButton
+              size={20}
+              background={false}
+              icon="maps-location-02"
+              onPress={goToMap}
+            />
+            <IconButton
+              size={20}
+              background={false}
+              icon="cancel-01"
+              onPress={clearText}
+            />
+          </>
         )}
       </View>
     );
@@ -141,8 +179,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fonts.Regular,
     color: colors.textDark,
-    padding: 0,
+    // padding: 0,
     height: 40,
+    // paddingRight: 20,
   },
   titleStyles: {
     position: 'absolute',

@@ -1,15 +1,19 @@
-import React, {forwardRef, useImperativeHandle, useRef} from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import {fonts} from '../res/fonts';
 import {colors} from '../res/colors';
 import IconButton from './IconButton';
-import {Image} from 'react-native';
 import Button from './Button';
 
-const car1 = require('../assets/car1.png');
-
-export type IConfirmOrderBottomSheet = {
+export type IChooseLocationBottomSheet = {
   close: () => void;
   present: () => void;
 };
@@ -17,11 +21,15 @@ export type IConfirmOrderBottomSheet = {
 type Props = {
   onSubmit: () => void;
   onCollapse: () => void;
+  text: string;
+  loading?: boolean;
+  street?: string;
 };
 
-const ConfirmOrderBottomSheet = forwardRef<IConfirmOrderBottomSheet, Props>(
-  ({onSubmit, onCollapse}, ref) => {
+const ChooseLocationBottomSheet = forwardRef<IChooseLocationBottomSheet, Props>(
+  ({onSubmit, onCollapse, text, loading = false, street}, ref) => {
     const BottomSheetRef = useRef<BottomSheet>(null);
+    const [height, setHeight] = useState<number>(100);
 
     useImperativeHandle(ref, () => ({
       close() {
@@ -42,6 +50,12 @@ const ConfirmOrderBottomSheet = forwardRef<IConfirmOrderBottomSheet, Props>(
       }
     };
 
+    const snapPoints = useMemo(() => [1, height], [height]);
+
+    const onLayout = useCallback((event: any) => {
+      setHeight(event.nativeEvent.layout.height + 30);
+    }, []);
+
     return (
       <BottomSheet
         style={styles.sheet}
@@ -51,22 +65,44 @@ const ConfirmOrderBottomSheet = forwardRef<IConfirmOrderBottomSheet, Props>(
         enableHandlePanningGesture={false}
         enableContentPanningGesture={false}
         onChange={onChange}
-        snapPoints={[1, 180]}>
+        snapPoints={snapPoints}>
         <BottomSheetView style={styles.contentContainer}>
-          <View style={styles.route}>
-            <Text style={styles.routeText}>78 Woji road</Text>
-            <IconButton
-              icon="search"
-              onPress={() => BottomSheetRef.current?.collapse()}
-            />
+          <View onLayout={onLayout}>
+            <View
+              style={[
+                styles.route,
+                loading ? styles.disabled : styles.enabled,
+              ]}>
+              <View style={styles.textBox}>
+                <Text style={styles.routeText} numberOfLines={2}>
+                  {street || 'Port Harcourt'}
+                </Text>
+              </View>
+              <IconButton
+                icon="search"
+                onPress={() => BottomSheetRef.current?.collapse()}
+              />
+            </View>
+            {!street && (
+              <View
+                style={[
+                  styles.info,
+                  loading ? styles.disabled : styles.enabled,
+                ]}>
+                <Text style={styles.infoText}>
+                  Move the map to set Precise location
+                </Text>
+              </View>
+            )}
+            <View style={styles.btn}>
+              <Button
+                text={`Confirm ${text}`}
+                disabled={!street}
+                primary
+                onPress={handleSubmitPress}
+              />
+            </View>
           </View>
-          <View style={styles.info}>
-            <Image style={styles.image} source={car1} />
-            <Text style={styles.infoText}>
-              Economy - <Text style={styles.subInfoText}>N800</Text>
-            </Text>
-          </View>
-          <Button text="Confirm Order" primary onPress={handleSubmitPress} />
         </BottomSheetView>
       </BottomSheet>
     );
@@ -84,6 +120,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 6,
   },
+  enabled: {
+    opacity: 1,
+  },
+  disabled: {
+    opacity: 0.3,
+  },
   handleIndicatorStyle: {
     backgroundColor: colors.neutralN100,
     width: 122,
@@ -96,20 +138,22 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   route: {
+    gap: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  textBox: {
+    flex: 1,
+  },
   routeText: {
     fontFamily: fonts.SemiBold,
-    fontSize: 24,
+    fontSize: 20,
     color: colors.textDark,
   },
   info: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
-    gap: 10,
   },
   infoText: {
     fontFamily: fonts.Regular,
@@ -125,6 +169,9 @@ const styles = StyleSheet.create({
     width: 30,
     resizeMode: 'contain',
   },
+  btn: {
+    paddingVertical: 10,
+  },
 });
 
-export default ConfirmOrderBottomSheet;
+export default ChooseLocationBottomSheet;
