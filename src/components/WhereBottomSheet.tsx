@@ -7,6 +7,9 @@ import {colors} from '../res/colors';
 import RecentPlaces from './RecentPlaces';
 // import {useNavigation} from '@react-navigation/native';
 
+// const placeIcon = require('../assets/places-icon.png');
+// const upcomingRide = require('../assets/upcoming-ride.png');
+
 export type IWhereBottomSheet = {
   close: () => void;
   present: () => void;
@@ -84,6 +87,7 @@ const WhereBottomSheet = forwardRef<IWhereBottomSheet, Props>(
                     size={20}
                     color={colors.neutralN300}
                   />
+                  {/* <Image style={styles.image} source={placeIcon} /> */}
                   <Text style={styles.linkText}>Popular places</Text>
                 </Pressable>
               </View>
@@ -101,6 +105,7 @@ const WhereBottomSheet = forwardRef<IWhereBottomSheet, Props>(
                     size={20}
                     color={colors.neutralN600}
                   />
+                  {/* <Image style={styles.image} source={upcomingRide} /> */}
                   <Text style={styles.linkText}>Schedule ride</Text>
                 </Pressable>
               </View>
@@ -181,6 +186,11 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     gap: 20,
+  },
+  image: {
+    flex: 1,
+    height: '100%',
+    width: 20,
   },
 });
 
